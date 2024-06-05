@@ -14,7 +14,4 @@ result2 = single_root_words('Disablement', 'Able', 'Mable', 'Disable', 'Bagel')
 print(result1)
 print(result2)
 
-# list1 = ['red', 'green', 'blue', 'orange', 'green', 'gray', 'green']
-# color_count = list1.count('green')
-# print('The count of color: green is ', color_count)
 

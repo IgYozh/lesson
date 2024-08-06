@@ -1,0 +1,87 @@
+import React, { useState } from 'react';
+
+interface QuestStep {
+  id: number;
+  text: string;
+  choices: { text: string; nextStepId: number }[];
+}
+
+const questSteps: QuestStep[] = [
+  {
+    id: 1,
+    text: 'Вы стоите перед темной пещерой. Вход в пещеру охраняет страшный дракон.',
+    choices: [
+      { text: 'Войти в пещеру', nextStepId: 2 },
+      { text: 'Убежать', nextStepId: 3 },
+    ],
+  },
+  {
+    id: 2,
+    text: 'Вы вошли в пещеру. Дракон вас заметил и готов напасть.',
+    choices: [
+      { text: 'Напасть на дракона', nextStepId: 4 },
+      { text: 'Попытаться договориться с драконом', nextStepId: 5 },
+    ],
+  },
+  {
+    id: 3,
+    text: 'Вы убежали от пещеры. Но теперь вы потерялись в лесу.',
+    choices: [
+      { text: 'Искать выход из леса', nextStepId: 6 },
+      { text: 'Остаться в лесу на ночь', nextStepId: 7 },
+    ],
+  },
+  {
+    id: 4,
+    text: 'Вы напали на дракона и победили его! Теперь вы можете забрать сокровища.',
+    choices: [],
+  },
+  {
+    id: 5,
+    text: 'Вы договорились с драконом и он согласился поделиться сокровищами.',
+    choices: [],
+  },
+  {
+    id: 6,
+    text: 'Вы нашли выход из леса и вернулись домой.',
+    choices: [],
+  },
+  {
+    id: 7,
+    text: 'Вы остались в лесу на ночь и были съедены волками.',
+    choices: [],
+  },
+];
+
+const TextQuest = () => {
+  const [currentStepId, setCurrentStepId] = useState(1);
+  const currentStep = questSteps.find((step) => step.id === currentStepId);
+
+  if (!currentStep) {
+    return <div>Ошибка: шаг не найден</div>;
+  }
+
+  const handleChoiceClick = (nextStepId: number) => {
+    setCurrentStepId(nextStepId);
+  };
+
+  return (
+    <div className="max-w-md mx-auto p-4 bg-white rounded-md shadow-md">
+      <p className="text-lg font-bold mb-4">{currentStep.text}</p>
+      <ul>
+        {currentStep.choices.map((choice, index) => (
+          <li key={index} className="mb-2">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => handleChoiceClick(choice.nextStepId)}
+            >
+              {choice.text}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default TextQuest;
